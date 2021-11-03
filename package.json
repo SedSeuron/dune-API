@@ -1,0 +1,29 @@
+{
+  "name": "dune-api",
+  "version": "1.0.0",
+  "description": "Proyecto API REST fin de JS_CHALLENGE.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SedSeuron/dune-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SedSeuron/dune-API/issues"
+  },
+  "homepage": "https://github.com/SedSeuron/dune-API#readme",
+  "devDependencies": {
+    "eslint": "^8.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.14",
+    "prettier": "^2.4.1"
+  }
+}
