@@ -1,3 +1,5 @@
+const express = require('express');
+
 const charactersRouter = require('./charactersRouter');
 const factionsRouter = require('./factionsRouter');
 const planetsRouter = require('./planetsRouter');
@@ -9,12 +11,14 @@ const usersRouter = require('./usersRouter');
 
 
 function routerApi(app) {
-  app.use('/characters', charactersRouter);
-  app.use('/factions', factionsRouter);
-  app.use('/planets', planetsRouter);
-  app.use('/documentation', documentationRouter);
-  app.use('/about', aboutRouter);
-  app.use('/users', usersRouter);
+    const router = express.Router();
+    app.use('/api/v1', router);
+    router.use('/characters', charactersRouter);
+    router.use('/factions', factionsRouter);
+    router.use('/planets', planetsRouter);
+    router.use('/documentation', documentationRouter);
+    router.use('/about', aboutRouter);
+    router.use('/users', usersRouter);
 };
 
 module.exports = routerApi;
