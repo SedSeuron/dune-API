@@ -2,12 +2,59 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.json({
+const factions = [
+    {
         id_faction: 1,
-        faction: 'Atreides'
-    });
+        faction: 'Bene Gesserit',
+    },
+    {
+        id_faction: 2, 
+        faction: 'Bene Tleilax',
+    },
+    {
+        id_faction: 3,
+        faction: 'Cofradía Espacial',
+    },
+    {
+        id_faction: 4,
+        faction: 'Fremen',
+    },
+    {
+        id_faction: 5,
+        faction: 'Combine Honnete Ober Advancer Mercantiles (CHOAM)',
+    },
+    {
+        id_faction: 6,
+        faction: 'Sardaukar',
+    },
+    {
+        id_faction: 7,
+        faction: 'Mentats',
+    },
+    {
+        id_faction: 8,
+        faction: 'Landsraad',
+    },
+    {
+        id_faction: 9,
+        faction: 'Escuela Suk',
+    },
 
+];
+router.get('/', (req, res) => {
+    res.json(factions);
+});
+
+router.get('/:id', (req, res) => {
+    let { id } = req.params;
+    id--
+    if (id > factions.length) {
+        res.json({
+            message: 'ID no encontrado, el número total de IDs es de: ' + factions.length,
+        });
+    } else {
+        res.json(factions[id]);
+    };
 });
 
 router.get('/:factionsId/characters/:charactersId', (req, res) => {

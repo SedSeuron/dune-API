@@ -127,9 +127,16 @@ router.get('/filter', (req, res) => {
     })
 });*/
 router.get('/:id', (req, res) => {
-    const { id_name } = req.query;
-    res.json(characters[id_name]);
-});
+    let { id } = req.params;
+    id--
+    if (id > characters.length) {
+        res.json({
+            message: 'ID no encontrado, el número total de IDs es de: ' + characters.length,
+        });
+    } else {
+        res.json(characters[id]);
+    };
+    });
 
 router.post('/', (req, res) => {
     const body = req.body;

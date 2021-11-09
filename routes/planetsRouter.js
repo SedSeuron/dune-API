@@ -56,6 +56,18 @@ router.get('/', (req, res) => {
     res.json(planets);
 });
 
+router.get('/:id', (req, res) => {
+    let { id } = req.params;
+    id--
+    if (id > planets.length) {
+        res.json({
+            message: 'ID no encontrado, el número total de IDs es de: ' + planets.length,
+        });
+    } else {
+        res.json(planets[id]);
+    };
+    });
+
 router.post('/', (req, res) => {
     const body = req.body;
     res.json({
