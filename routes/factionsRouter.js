@@ -1,60 +1,19 @@
 const express = require('express');
+const FactionServices = require('../services/factionServices');
+
+const service = new FactionServices();
 
 const router = express.Router();
 
-const factions = [
-    {
-        id_faction: 1,
-        faction: 'Bene Gesserit',
-    },
-    {
-        id_faction: 2, 
-        faction: 'Bene Tleilax',
-    },
-    {
-        id_faction: 3,
-        faction: 'Cofradía Espacial',
-    },
-    {
-        id_faction: 4,
-        faction: 'Fremen',
-    },
-    {
-        id_faction: 5,
-        faction: 'Combine Honnete Ober Advancer Mercantiles (CHOAM)',
-    },
-    {
-        id_faction: 6,
-        faction: 'Sardaukar',
-    },
-    {
-        id_faction: 7,
-        faction: 'Mentats',
-    },
-    {
-        id_faction: 8,
-        faction: 'Landsraad',
-    },
-    {
-        id_faction: 9,
-        faction: 'Escuela Suk',
-    },
-
-];
 router.get('/', (req, res) => {
-    res.json(factions);
+    const factions = service.find();
+    res.status(200).json(factions);
 });
 
-router.get('/:id', (req, res) => {
-    let { id } = req.params;
-    id--
-    if (id > factions.length) {
-        res.json({
-            message: 'ID no encontrado, el número total de IDs es de: ' + factions.length,
-        });
-    } else {
-        res.json(factions[id]);
-    };
+router.get('/:id_faction', (req, res) => {
+    const { id_faction } = req.params;
+    const factions = service.findOne(id_faction);
+    res.status(200).json(factions);
 });
 
 router.get('/:factionsId/characters/:charactersId', (req, res) => {
@@ -67,7 +26,7 @@ router.get('/:factionsId/characters/:charactersId', (req, res) => {
 
 router.post('/', (req, res) => {
     const body = req.body;
-    res.json({
+    res.status(201).json({
         message: 'Created',
         data: body
     });
@@ -76,7 +35,7 @@ router.post('/', (req, res) => {
 router.patch('/:id', (req, res) => {
     const { id } = req.params;
     const body = req.body;
-    res.json({
+    res.status(202).json({
         message: 'Updated',
         data: body,
         id,
