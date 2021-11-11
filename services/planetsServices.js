@@ -52,23 +52,28 @@ class PlanetsServices {
         ];
     };
 
-    create() {
-
+    async create(data) {
+        const newPlanet = {
+            id_planet: this.planets.length + 1,
+            ...data,
+        };
+        this.planets.push(newPlanet);
+        return newPlanet;
     };
 
-    find() {
+    async find() {
         return this.planets;
     };
 
-    findOne(id_planet) {
+    async findOne(id_planet) {
         return this.planets.find(item => item.id_planet == id_planet);
     };
 
-    update() {
+    async update() {
 
     };
 
-    delete() {
+    async delete() {
 
     };
 

@@ -172,4 +172,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Test files
+web_design/
+
 # End of https://www.toptal.com/developers/gitignore/api/node,windows,linux

@@ -5,49 +5,62 @@ const service = new FactionServices();
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    const factions = service.find();
+router.get('/', async (req, res) => {
+    const factions = await service.find();
     res.status(200).json(factions);
 });
 
-router.get('/:id_faction', (req, res) => {
-    const { id_faction } = req.params;
-    const factions = service.findOne(id_faction);
-    res.status(200).json(factions);
+router.get('/:id_faction', async (req, res) => {
+    try {
+        const { id_faction } = req.params;
+        const faction = await service.findOne(id_faction);
+        res.status(200).json(faction);
+    } catch (error) {
+        res.status(404).json({
+            message: error.message,
+        });
+    }
+    
 });
-
-router.get('/:factionsId/characters/:charactersId', (req, res) => {
+/*
+router.get('/:factionsId/characters/:charactersId',  (req, res) => {
     const { factionsId, charactersId } = req.params;
     res.json({
         factionsId,
         charactersId,
     });
-});
+});*/
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const body = req.body;
-    res.status(201).json({
-        message: 'Created',
-        data: body
-    });
+    const newFaction = await service.create(body);
+    res.status(201).json({newFaction});
 });
 
-router.patch('/:id', (req, res) => {
-    const { id } = req.params;
-    const body = req.body;
-    res.status(202).json({
-        message: 'Updated',
-        data: body,
-        id,
-    });
+router.patch('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const body = req.body;
+        const faction = await service.update(id, body);
+        res.status(202).json({faction});
+    } catch (error) {
+        res.status(404).json({
+            message: error.message,
+        });
+    };
+    
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
+    try {
     const { id } = req.params;
-    res.json({
-        message: 'Deleted',
-        id,
-    });
+    const rta = await service.delete(id);
+    res.status(200).json({rta});
+    } catch (error) {
+        res.status(404).json({
+            message: error.message,
+        })
+    }
 });
 
 

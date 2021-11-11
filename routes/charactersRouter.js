@@ -5,8 +5,8 @@ const CharactersServices = require("./../services/characterServices")
 const router = express.Router();
 const service = new CharactersServices();
 
-router.get('/', (req, res) => {
-    const characters = service.find();
+router.get('/', async (req, res) => {
+    const characters = await service.find();
     res.status(200).json(characters);
     
 });
@@ -24,36 +24,41 @@ router.get('/filter', (req, res) => {
         planet: 'Caladan'
     })
 });*/
-router.get('/:id_name', (req, res) => {
+router.get('/:id_name', async (req, res) => {
     const { id_name } = req.params;
-    const character = service.findOne(id_name);
+    const character = await service.findOne(id_name);
     res.status(200).json(character);
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const body = req.body;
-    res.status(201).json({
-        message: 'Created',
-        data: body
-    });
+    const newCharacter = await service.create(body);
+    res.status(201).json({newCharacter});
 });
 
-router.patch('/:id', (req, res) => {
-    const { id } = req.params;
-    const body = req.body;
-    res.status(202).json({
-        message: 'Updated',
-        data: body,
-        id,
-    });
+router.patch('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const body = req.body;
+        const character = await service.update(id, body);
+        res.status(202).json(character);
+    } catch (error) {
+        res.status(404).json({
+            message: error.message,
+        })
+    };
 });
 
-router.delete('/:id', (req, res) => {
-    const { id } = req.params;
-    res.json({
-        message: 'Deleted',
-        id,
-    });
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const rta = await service.delete(id);
+        res.status(200).json(rta);
+    } catch (error) {
+        res.status(404).json({
+            message: error.message,
+        });
+    }
 });
 
 

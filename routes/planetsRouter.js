@@ -14,9 +14,8 @@ router.get('/', (req, res) => {
 router.get('/:id_planet', (req, res) => {
     const { id_planet } = req.params;
     const planet = service.findOne(id_planet);
-    res.status(200).json(planet)
-   
-    });
+    res.status(200).json(planet);
+});
 
 router.post('/', (req, res) => {
     const body = req.body;

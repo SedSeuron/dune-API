@@ -42,26 +42,50 @@ class FactionServices{
         ];
     };
 
-    create() {
-
+    async create(data) {
+        const newFaction = {
+            id_faction: this.factions.length + 1,
+            ...data,
+        };
+        this.factions.push(newFaction);
+        return newFaction;
     };
 
-    find() {
+    async find() {
         return this.factions;
     };
 
-    findOne(id_faction) {
-        return this.factions.find(item => item.id_faction == id_faction);
+    async findOne(id_faction) {
+        const index = this.factions.findIndex(item => item.id_faction == id_faction);
+        if (index === -1) {
+            throw new Error('Faction not found or lost in the times....')
+        };
+        return this.factions[index];
     };
 
-    update() {
-
+    
+    async update(id_faction, changes) {
+        const index = this.factions.findIndex(item => item.id_faction == id_faction)
+        if (index === -1) {
+            throw new Error('Faction not found or lost in the times....')
+        };
+        const faction = this.factions[index];
+        this.factions[index] = {
+            ...faction,
+            ...changes,
+        };
+        return this.factions[index];
     };
 
-    delete() {
-
+    async delete(id_faction) {
+        const index = this.factions.findIndex(item => item.id_faction == id_faction)
+        if (index === -1) {
+            throw new Error('Faction not found or lost in the times....')
+        };
+        this.factions.splice(index, 1);
+        return {id_faction};
     };
-
+   
 };
 
 module.exports = FactionServices;

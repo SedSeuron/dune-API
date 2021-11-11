@@ -109,26 +109,44 @@ class CharactersServices {
     };
     
 
-    create() {
-
-
+    async create(data) {
+        const newCharacter = {
+            id_name: this.characters.length + 1,
+            ...data,
+        };
+        this.characters.push(newCharacter);
+        return newCharacter;
     };
 
-    find() {
+    async find() {
         return this.characters;
 
     };
 
-    findOne(id_name) {
+    async findOne(id_name) {
         return this.characters.find(item => item.id_name == id_name);
     };
 
-    update() {
-
+    async update(id_name, changes) {
+        const index = this.characters.findIndex(item => item.id_name == id_name)
+        if (index === -1) {
+            throw new Error('Character not found or lost in the desert....')
+        };
+        const character = this.characters[index];
+        this.characters[index] = {
+            ...character,
+            ...changes,
+        };
+        return this.characters[index];
     };
 
-    delete() {
-
+    async delete(id_name) {
+        const index = this.characters.findIndex(item => item.id_name == id_name)
+        if (index === -1) {
+            throw new Error('Character not found or lost in the desert....')
+        };
+        this.characters.splice(index, 1);
+        return {id_name};
     };
 
 };
