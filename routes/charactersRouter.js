@@ -25,9 +25,15 @@ router.get('/filter', (req, res) => {
     })
 });*/
 router.get('/:id_name', async (req, res) => {
-    const { id_name } = req.params;
-    const character = await service.findOne(id_name);
-    res.status(200).json(character);
+    try {
+        const { id_name } = req.params;
+        const character = await service.findOne(id_name);
+        res.status(200).json(character);
+    } catch (error) {
+        res.status(404).json({
+            message: error.message,
+        })
+    }
 });
 
 router.post('/', async (req, res) => {

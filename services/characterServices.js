@@ -124,7 +124,11 @@ class CharactersServices {
     };
 
     async findOne(id_name) {
-        return this.characters.find(item => item.id_name == id_name);
+        const index = this.characters.findIndex(item => item.id_name == id_name);
+        if (index === -1) {
+            throw new Error('Character not found or lost in the desert....')
+        };
+        return this.characters[index];
     };
 
     async update(id_name, changes) {

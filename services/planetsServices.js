@@ -66,15 +66,33 @@ class PlanetsServices {
     };
 
     async findOne(id_planet) {
-        return this.planets.find(item => item.id_planet == id_planet);
+         const index = this.planets.findIndex(item => item.id_planet == id_planet);
+         if (index === -1) {
+            throw new Error('Faction not found or lost in the times....')
+        };
+        return this.planets[index];
     };
 
-    async update() {
-
+    async update(id_planet, changes) {
+        const index = this.planets.findIndex(item => item.id_planet == id_planet)
+        if (index === -1) {
+            throw new Error('PLanet not found or lost in the deep space....')
+        };
+        const planet = this.planets[index];
+        this.planets[index] = {
+            ...planet,
+            ...changes,
+        };
+        return this.planets[index];
     };
 
-    async delete() {
-
+    async delete(id_planet) {
+        const index = this.planets.findIndex(item => item.id_planet == id_planet)
+        if (index === -1) {
+            throw new Error('Planet not found or lost in the deep space....')
+        };
+        this.planets.splice(index, 1);
+        return {id_planet};
     };
 
 } ;
