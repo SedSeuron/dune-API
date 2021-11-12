@@ -15,24 +15,13 @@ router.get('/filter', (req, res) => {
     res.send('Soy un filtro');
 });
 
-/*router.get('/:id', (req, res) => {
-    const { id } = req.params;
-    res.json({
-        id,
-        name: 'Jessica Atreides',
-        faction: 'Bene Gesserit',
-        planet: 'Caladan'
-    })
-});*/
-router.get('/:id_name', async (req, res) => {
+router.get('/:id_name', async (req, res, next) => {
     try {
         const { id_name } = req.params;
         const character = await service.findOne(id_name);
         res.status(200).json(character);
     } catch (error) {
-        res.status(404).json({
-            message: error.message,
-        })
+        next(error);
     }
 });
 
@@ -42,28 +31,24 @@ router.post('/', async (req, res) => {
     res.status(201).json({newCharacter});
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
         const body = req.body;
         const character = await service.update(id, body);
         res.status(202).json(character);
     } catch (error) {
-        res.status(404).json({
-            message: error.message,
-        })
+        next(error);
     };
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
         const rta = await service.delete(id);
         res.status(200).json(rta);
     } catch (error) {
-        res.status(404).json({
-            message: error.message,
-        });
+        next(error);
     }
 });
 

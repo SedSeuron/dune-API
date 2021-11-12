@@ -1,3 +1,5 @@
+const boom = require("@hapi/boom");
+
 class PlanetsServices {
 
     constructor() {
@@ -68,7 +70,7 @@ class PlanetsServices {
     async findOne(id_planet) {
          const index = this.planets.findIndex(item => item.id_planet == id_planet);
          if (index === -1) {
-            throw new Error('Faction not found or lost in the times....')
+            throw boom.notFound('Planet not found or lost in the deep space....')
         };
         return this.planets[index];
     };
@@ -76,7 +78,7 @@ class PlanetsServices {
     async update(id_planet, changes) {
         const index = this.planets.findIndex(item => item.id_planet == id_planet)
         if (index === -1) {
-            throw new Error('PLanet not found or lost in the deep space....')
+            throw boom.notFound('Planet not found or lost in the deep space....')
         };
         const planet = this.planets[index];
         this.planets[index] = {
@@ -89,7 +91,7 @@ class PlanetsServices {
     async delete(id_planet) {
         const index = this.planets.findIndex(item => item.id_planet == id_planet)
         if (index === -1) {
-            throw new Error('Planet not found or lost in the deep space....')
+            throw boom.notFound('Planet not found or lost in the deep space....')
         };
         this.planets.splice(index, 1);
         return {id_planet};

@@ -1,3 +1,5 @@
+const boom = require('@hapi/boom');
+
 class CharactersServices {
 
     constructor() {
@@ -124,17 +126,18 @@ class CharactersServices {
     };
 
     async findOne(id_name) {
-        const index = this.characters.findIndex(item => item.id_name == id_name);
-        if (index === -1) {
-            throw new Error('Character not found or lost in the desert....')
-        };
-        return this.characters[index];
+        const character = this.characters.find(item => item.id_name == id_name);
+        if (!character) {
+            throw boom.notFound('Character not found or lost in the desert....');
+         };
+        return character;
     };
 
     async update(id_name, changes) {
         const index = this.characters.findIndex(item => item.id_name == id_name)
         if (index === -1) {
-            throw new Error('Character not found or lost in the desert....')
+            throw boom.notFound('Character not found or lost in the desert....');
+
         };
         const character = this.characters[index];
         this.characters[index] = {
@@ -147,7 +150,8 @@ class CharactersServices {
     async delete(id_name) {
         const index = this.characters.findIndex(item => item.id_name == id_name)
         if (index === -1) {
-            throw new Error('Character not found or lost in the desert....')
+            throw boom.notFound('Character not found or lost in the desert....');
+
         };
         this.characters.splice(index, 1);
         return {id_name};

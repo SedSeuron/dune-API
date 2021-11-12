@@ -11,15 +11,13 @@ router.get('/', async  (req, res) => {
     res.status(200).json(planets);
 });
 
-router.get('/:id_planet', async (req, res) => {
+router.get('/:id_planet', async (req, res, next) => {
     try {
         const { id_planet } = req.params;
         const planet = await service.findOne(id_planet);
         res.status(200).json(planet);
     } catch (error) {
-        res.status(404).json({
-            message: error.message,
-        });
+        next(error);
     };
 });
 
@@ -29,27 +27,23 @@ router.post('/', async (req, res) => {
     res.status(201).json({newPlanet});
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
         const body = req.body;
         const planet = await service.update(id, body);
         res.status(202).json({planet});
     } catch (error) {
-        res.status(404).json({
-            message: error.message,
-        });
+        next(error);
     };
 });
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
         const rta = await service.delete(id);
          res.status(200).json(rta);
     } catch (error) {
-        res.status(404).json({
-            message: error.message,
-        });
+        next(error);
     };
 });
 

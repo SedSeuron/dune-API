@@ -1,3 +1,5 @@
+const boom = require('@hapi/boom');
+
 class FactionServices{
 
     constructor () {
@@ -56,18 +58,18 @@ class FactionServices{
     };
 
     async findOne(id_faction) {
-        const index = this.factions.findIndex(item => item.id_faction == id_faction);
-        if (index === -1) {
-            throw new Error('Faction not found or lost in the times....')
+        const faction = this.factions.find(item => item.id_faction == id_faction);
+        if (!faction) {
+            throw boom.notFound('Faction not found or lost in the times....')
         };
-        return this.factions[index];
+        return faction;
     };
 
     
     async update(id_faction, changes) {
         const index = this.factions.findIndex(item => item.id_faction == id_faction)
         if (index === -1) {
-            throw new Error('Faction not found or lost in the times....')
+            throw boom.notFound('Faction not found or lost in the times....')
         };
         const faction = this.factions[index];
         this.factions[index] = {
@@ -80,7 +82,7 @@ class FactionServices{
     async delete(id_faction) {
         const index = this.factions.findIndex(item => item.id_faction == id_faction)
         if (index === -1) {
-            throw new Error('Faction not found or lost in the times....')
+            throw boom.notFound('Faction not found or lost in the times....')
         };
         this.factions.splice(index, 1);
         return {id_faction};

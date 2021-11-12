@@ -10,15 +10,13 @@ router.get('/', async (req, res) => {
     res.status(200).json(factions);
 });
 
-router.get('/:id_faction', async (req, res) => {
+router.get('/:id_faction', async (req, res, next) => {
     try {
         const { id_faction } = req.params;
         const faction = await service.findOne(id_faction);
         res.status(200).json(faction);
     } catch (error) {
-        res.status(404).json({
-            message: error.message,
-        });
+        next(error);
     }
     
 });
@@ -37,32 +35,30 @@ router.post('/', async (req, res) => {
     res.status(201).json({newFaction});
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
         const body = req.body;
         const faction = await service.update(id, body);
         res.status(202).json({faction});
     } catch (error) {
-        res.status(404).json({
-            message: error.message,
-        });
+        next(error);
     };
     
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
     try {
     const { id } = req.params;
     const rta = await service.delete(id);
-    res.status(200).json({rta});
+    res.status(200).json({
+        rta,
+        message: "deleted"});
     } catch (error) {
-        res.status(404).json({
-            message: error.message,
-        })
+        next(error);
     }
 });
 
 
 
-module.exports = router;
+module.exports = router;    
