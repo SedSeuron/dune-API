@@ -1,6 +1,8 @@
 const express = require('express');
 
-const CharactersServices = require("./../services/characterServices")
+const CharactersServices = require("./../services/characterServices");
+const validatorHandler = require("./../middlewares/validatorHandler");
+const {createCharacterSchema, updateCharacterSchema, getCharacterSchema} = require ("./../schemas/characterSchema");
 
 const router = express.Router();
 const service = new CharactersServices();
@@ -15,23 +17,30 @@ router.get('/filter', (req, res) => {
     res.send('Soy un filtro');
 });
 
-router.get('/:id_name', async (req, res, next) => {
-    try {
-        const { id_name } = req.params;
-        const character = await service.findOne(id_name);
-        res.status(200).json(character);
-    } catch (error) {
-        next(error);
-    }
+router.get('/:id', 
+    validatorHandler(getCharacterSchema, 'params'),
+    async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const character = await service.findOne(id);
+            res.status(200).json(character);
+        } catch (error) {
+            next(error);
+        }
 });
 
-router.post('/', async (req, res) => {
+router.post('/',
+    validatorHandler(createCharacterSchema, 'body'),
+    async (req, res) => {
     const body = req.body;
     const newCharacter = await service.create(body);
     res.status(201).json({newCharacter});
 });
 
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id',
+    validatorHandler(getCharacterSchema, 'params'),
+    validatorHandler(updateCharacterSchema, 'body'),
+    async (req, res, next) => {
     try {
         const { id } = req.params;
         const body = req.body;

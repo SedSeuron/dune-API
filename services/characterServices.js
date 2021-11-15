@@ -5,103 +5,103 @@ class CharactersServices {
     constructor() {
         this.characters = [
             {
-            id_name: 1,
+            id: 1,
             name: 'Paul Atreides',
             faction: 'Atreides',
             planet: 'Caladan'
             },
             {
-            id_name: 2,
+            id: 2,
             name: 'Duncan Idaho',
             faction: 'Atreides',
             planet: 'Ginaz'
             }, 
             {
-            id_name: 3,
+            id: 3,
             name: 'Jessica Atreides',
             faction: 'Bene Gesserit',
             planet: 'Caladan'
             },
             {
-                id_name: 4,
+                id: 4,
                 name: 'Alia Atreides',
                 faction: 'Atreides',
                 planet: 'Arrakis',
             },
             {
-                id_name: 5,
+                id: 5,
                 name: 'Duque Leto I Atreides',
                 faction: 'Atreides',
                 planet: 'Caladan',
             },
             {
-                id_name: 6,
+                id: 6,
                 name: 'Leto II Atreides',
                 faction: 'Atreides',
                 planet: 'Arrakis',
             },
             {
-                id_name: 7,
+                id: 7,
                 name: 'Gurney Halleck',
                 faction: 'Atreides',
                 planet: 'Giedi Prime',
             },
             {
-                id_name: 8,
+                id: 8,
                 name: 'Thufir Hawat',
                 faction: 'Atreides',
                 planet: 'Desconocido',
             },
             {
-                id_name: 9,
+                id: 9,
                 name: 'Dr. Wellington Yueh',
                 faction: 'Suk',
                 planet: 'Giedi Prime',
             },
             {
-                id_name: 10,
+                id: 10,
                 name: 'Barón Vladimir Harkonnen',
                 faction: 'Harkonnen',
                 planet: 'Giedi Prime',
             },
             {
-                id_name: 11,
+                id: 11,
                 name: 'Feyd-Rautha Raban Harkonnen',
                 faction: 'Harkonnen',
                 planet: 'Giedi Prime',
             },
             {
-                id_name: 12,
+                id: 12,
                 name: 'Piter De Vries',
                 faction: 'Harkonen',
                 planet: 'Giedi Prime'
             },
             {
-                id_name: 13,
+                id: 13,
                 name: 'Glossu Rabban Harkonnen',
                 faction: 'Harkonnen',
                 planet: 'Giedi Prime',
             },
             {
-                id_name: 14,
+                id: 14,
                 name: 'Shaddam IV',
                 faction: 'Corrino',
                 planet: 'Kaitain',
             },
             {
-                id_name: 15,
+                id: 15,
                 name:'Princesa Irulan',
                 faction: 'Corrino',
                 planet: 'Kaitain',
             },
             {
-                id_name: 16,
+                id: 16,
                 name: 'Reverenda Madre Gaius Helen Mohiam',
                 faction: 'Bene Gesserit',
                 planet: 'Wallach IX',
             },
             {
-                id_name: 17,
+                id: 17,
                 name:'Liet-Kynes',
                 faction: 'Corrino',
                 planet: 'Arrakis',
@@ -113,7 +113,7 @@ class CharactersServices {
 
     async create(data) {
         const newCharacter = {
-            id_name: this.characters.length + 1,
+            id: this.characters.length + 1,
             ...data,
         };
         this.characters.push(newCharacter);
@@ -125,16 +125,16 @@ class CharactersServices {
 
     };
 
-    async findOne(id_name) {
-        const character = this.characters.find(item => item.id_name == id_name);
+    async findOne(id) {
+        const character = this.characters.find(item => item.id == id);
         if (!character) {
             throw boom.notFound('Character not found or lost in the desert....');
          };
         return character;
     };
 
-    async update(id_name, changes) {
-        const index = this.characters.findIndex(item => item.id_name == id_name)
+    async update(id, changes) {
+        const index = this.characters.findIndex(item => item.id == id)
         if (index === -1) {
             throw boom.notFound('Character not found or lost in the desert....');
 
@@ -147,14 +147,14 @@ class CharactersServices {
         return this.characters[index];
     };
 
-    async delete(id_name) {
-        const index = this.characters.findIndex(item => item.id_name == id_name)
+    async delete(id) {
+        const index = this.characters.findIndex(item => item.id == id)
         if (index === -1) {
             throw boom.notFound('Character not found or lost in the desert....');
 
         };
         this.characters.splice(index, 1);
-        return {id_name};
+        return {id};
     };
 
 };
