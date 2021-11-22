@@ -23,7 +23,8 @@ app.use(cors(options));
 
 app.get('/', (req, res) => {
     res.status(200).json({
-        message: "Bienvenido a la DUNE API"
+        message: "Bienvenido a la DUNE API",
+        message: "https://pacific-dawn-62610.herokuapp.com/api/v1/factions"
     });
 });
 
