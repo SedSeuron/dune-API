@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors')
 const routerApi = require('./routes');
-const path = require('path');
+const frontend = express.static('frontend');
+
 
 const {  logErrors, errorHandler, boomErrorHandler  } = require("./middlewares/errorHandler");
 
@@ -21,15 +22,14 @@ const options = {
 }
 app.use(cors(options));
 
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
     res.status(200).json({
         message: "Bienvenido a la DUNE API",
-        message: "https://pacific-dawn-62610.herokuapp.com/api/v1/factions"
     });
-});
+});*/
 
 routerApi(app);
-
+app.use(frontend);
 app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler); //Detiene el proceso al no tener el next.
@@ -38,3 +38,4 @@ app.use(errorHandler); //Detiene el proceso al no tener el next.
 app.listen(port, () => {
     console.log('Mi puerto ' + port);
 });
+
