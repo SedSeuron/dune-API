@@ -7,7 +7,7 @@ Proyecto API REST fin de JS_CHALLENGE.
 - CSS
 - Javascript
 - Node.JS
-- PostgreSQL
+- PostgreSQL (pendiente de implementación).
 
 
 ## Descripción:
